@@ -1,4 +1,4 @@
-let action = "ask";
+let action = "";
 let menu = ["add", "list", "delete", "quit"];
 let todos = [];
 
@@ -8,7 +8,7 @@ let todos = [];
  */
 function ask() {
   let reply = prompt("What would you like to do?");
-  while (!menu.includes(reply.toLowerCase())) {
+  while (!menu.includes(reply)) {
     reply = prompt(
       "What would you like to do? Options: add, list, delete, quit"
     );
@@ -20,8 +20,8 @@ function ask() {
  * Ends the user requested task by printing *s and returning to the main menu
  */
 function endTask() {
-  console.log("*********");
-  action = "ask";
+  alert("*********");
+  action = ask();
 }
 
 /**
@@ -34,7 +34,7 @@ function add() {
   todos.push(reply);
 
   // confirmation message
-  console.log(`${reply} added to list`);
+  alert(`${reply} added to list`);
 }
 
 /**
@@ -43,11 +43,11 @@ function add() {
  */
 function list() {
   if (todos.length === 0) {
-    console.log("To-do list is empty");
+    alert("To-do list is empty");
   } else {
     // display all items and their position in the to-do list
     for (let i = 0; i < todos.length; i++) {
-      console.log(`${i}: ${todos[i]}`);
+      alert(`${i}: ${todos[i]}`);
     }
   }
 }
@@ -64,13 +64,13 @@ function deleteItem() {
   let parsedReply = parseInt(reply);
 
   // if it's an invalid index, tell the user there is nothing there to delete
-  if (parsedReply === NaN || parsedReply >= todos.length) {
-    console.log(`Cannot delete index of: ${parsedReply}`);
+  if (isNaN(reply) || parsedReply >= todos.length) {
+    alert(`Cannot delete index of: ${parsedReply}`);
   } else {
     // remove item from to-do list
     let removedItem = todos.splice(parsedReply, 1);
     // provide confirmation that it has been removed
-    console.log(`${removedItem} removed`);
+    alert(`${removedItem} removed`);
   }
 }
 
@@ -92,14 +92,11 @@ while (action !== "quit") {
       deleteItem();
       endTask();
       break;
-    case "quit":
-      // quit the app
-      console.log("Quitting program");
-      break;
-    case "ask":
-    // ask what they would like to do
     default:
       // same as ask
-      ask();
+      action = ask();
   }
 }
+
+// quit the app
+alert("Ok, quitting the app");
